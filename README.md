@@ -78,11 +78,13 @@ labels = torch.tensor([1,2,1,1]) # 0,2,3 are in the same class
 Then we compute the distance between each points.  
 However the function **pdist** would only return a 1D array, we need to expand the dimension to 2D to better operate the selection of hard triplet.  
 ```python
+# L2 distance
 dist_l2 = pdist(features)
 dist_l2 = squareform(dist_l2)
+dist_l2 = torch.from_numpy(dist_l2)
+# Cosine distance
 dist_cos = pdist(features, "cosine")
 dist_cos = squareform(dist_cos)
-dist_l2 = torch.from_numpy(dist_l2)
 dist_cos = torch.from_numpy(dist_cos)
 ```
 dist_l2 =   
