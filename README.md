@@ -1,7 +1,8 @@
 # TripletLoss-note
 
 ## Introduction
-Triplet loss is a way to evalute and to train the networks by computing the distance between anchor point, postive point and negative point, which anchor point and positive point are in the same class.   First, we will have to embed our inputs into vectors then compute the distance between different inputs.  
+Triplet loss is a way to evalute and to train the networks by computing the distance between anchor point, postive point and negative point, which anchor point and positive point are in the same class.   
+First, we will have to embed our inputs into vectors then compute the distance between different inputs.  
 Then we back forward the loss to our network to adjust the weight and finally we expect our model to have the ability to push the negative point away from the anchor and pull the positive point toward.
 
 ## Requirements 
@@ -98,7 +99,8 @@ dist_cos =
   
 >Note: The matrices are symmetric matrix.
 
-Now we have to identify the hard triplet.
+Now we identify the hard triplet and store tem in to arrays.  
+
 ```python
 #take L2 distance for example
 n = features.shape[0]
@@ -112,7 +114,21 @@ for i in range(n):
 dist_ap = torch.cat(dist_ap)
 dist_an = torch.cat(dist_an)
 ``` 
-
+  
+Then we use **MarginRankingLoss** to compute the the loss of this batch.
+  
+```python
+y = torch.ones_like(dist_an) 
+loss = torch.nn.MarginRankingLoss(0.3) # 0.3 is the margin that AP and AN should have. 
+loss(dist_an, dist_ap, y) #return loss value inside a tensor
+```
+  
+Done! Now we can feed backward the loss value to our model to continue the training.
+  
+## Conclusion
+Hard triplet loss can train our model to achieve a higher accuracy however the training process could be very long and the model would become very hard to train if the network is too deep and have too much parameters.  
+The best way would be using a pretrain CNN model such as ResNet to do the feature extraction or embedding process, then we only train the last several output dense layers using triplet loss.  
+Also by using different ways to compute distance depends on different situations might also help to train our network.
 
 
 
