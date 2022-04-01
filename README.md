@@ -11,6 +11,11 @@ Then we back forward the loss to our network to adjust the weight and finally we
   - Numpy
   - Scipy
 
+## Reference 
+
+- [Triplet Loss 和 Center Loss详解和pytorch实现](https://blog.csdn.net/weixin_40671425/article/details/98068190)
+- [scipy pdist](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html)
+
 ## Contents
 
 - ### Triplet Loss
